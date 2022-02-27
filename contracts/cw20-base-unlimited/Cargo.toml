@@ -1,13 +1,11 @@
 [package]
-name = "cw20-base"
+name = "cw20-base-unlimited"
 version = "0.12.1"
-authors = ["Ethan Frey <ethanfrey@users.noreply.github.com>"]
+authors = ["keupsonite <keupsonite@protonmail.com", "Ethan Frey <ethanfrey@users.noreply.github.com>"]
 edition = "2018"
-description = "Basic implementation of a CosmWasm-20 compliant token"
+description = "CW20 Unlimited"
 license = "Apache-2.0"
-repository = "https://github.com/CosmWasm/cw-plus"
-homepage = "https://cosmwasm.com"
-documentation = "https://docs.cosmwasm.com"
+repository = "https://github.com/JunoMint/cw-plus"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -21,6 +19,7 @@ library = []
 cw-utils = { path = "../../packages/utils", version = "0.12.1" }
 cw2 = { path = "../../packages/cw2", version = "0.12.1" }
 cw20 = { path = "../../packages/cw20", version = "0.12.1" }
+junomint-prices = { version = "1.0.12", features = ["library"] }
 cw-storage-plus = { path = "../../packages/storage-plus", version = "0.12.1" }
 cosmwasm-std = { version = "1.0.0-beta5" }
 schemars = "0.8.1"
