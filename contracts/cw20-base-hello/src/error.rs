@@ -6,12 +6,6 @@ pub enum ContractError {
     #[error("{0}")]
     Std(#[from] StdError),
 
-    #[error("{0}")]
-    JunoMint(#[from] junomint_prices::error::PaymentError),
-
-    #[error("{0}")]
-    JunoPrice(#[from] junomint_prices::error::ContractError),
-
     #[error("Unauthorized")]
     Unauthorized {},
 
