@@ -1,0 +1,30 @@
+[package]
+name = "cw20-base-simple"
+version = "0.12.1"
+authors = ["keupsonite <keupsonite@protonmail.com", "Ethan Frey <ethanfrey@users.noreply.github.com>"]
+edition = "2018"
+description = "CW20 Simple"
+license = "Apache-2.0"
+repository = "https://github.com/JunoMint/cw-plus"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+backtraces = ["cosmwasm-std/backtraces"]
+# use library feature to disable all instantiate/execute/query exports
+library = []
+
+[dependencies]
+cw-utils = { path = "../../packages/utils", version = "0.12.1" }
+cw2 = { path = "../../packages/cw2", version = "0.12.1" }
+cw20 = { path = "../../packages/cw20", version = "0.12.1" }
+junomint-prices = { version = "1.0.12", features = ["library"] }
+cw-storage-plus = { path = "../../packages/storage-plus", version = "0.12.1" }
+cosmwasm-std = { version = "1.0.0-beta5" }
+schemars = "0.8.1"
+serde = { version = "1.0.103", default-features = false, features = ["derive"] }
+thiserror = { version = "1.0.23" }
+
+[dev-dependencies]
+cosmwasm-schema = { version = "1.0.0-beta5" }

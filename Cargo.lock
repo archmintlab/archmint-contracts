@@ -690,7 +690,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "cw20-base-hello"
+name = "cw20-base-mintable"
 version = "0.12.1"
 dependencies = [
  "cosmwasm-schema",
@@ -706,7 +706,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "cw20-base-mintable"
+name = "cw20-base-simple"
 version = "0.12.1"
 dependencies = [
  "cosmwasm-schema",
