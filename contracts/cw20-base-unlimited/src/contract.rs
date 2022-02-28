@@ -7,7 +7,6 @@ use cw20::{
     BalanceResponse, Cw20Coin, Cw20ReceiveMsg, DownloadLogoResponse, EmbeddedLogo, Logo, LogoInfo,
     MarketingInfoResponse, MinterResponse, TokenInfoResponse,
 };
-use junomint_prices::query::SwapDetailsResponse;
 
 use crate::allowances::{
     execute_burn_from, execute_decrease_allowance, execute_increase_allowance, execute_send_from,
@@ -16,7 +15,7 @@ use crate::allowances::{
 use crate::enumerable::{query_all_accounts, query_all_allowances};
 use crate::error::ContractError;
 use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
-use crate::state::{MinterData, TokenInfo, BALANCES, LOGO, MARKETING_INFO, TOKEN_INFO, ALLOWANCES};
+use crate::state::{MinterData, TokenInfo, BALANCES, LOGO, MARKETING_INFO, TOKEN_INFO};
 
 // version info for migration info
 const CONTRACT_NAME: &str = "crates.io:cw20-base-unlimited";
@@ -92,12 +91,6 @@ pub fn instantiate(
     _info: MessageInfo,
     msg: InstantiateMsg,
 ) -> Result<Response, ContractError> {
-    let price: SwapDetailsResponse = junomint_prices::tools::query_code_price(
-        deps.as_ref(),
-        "juno1ztrdwkg3krgg7ddjchheyvwhmzwwce3j2ctp3qfx67fysnqlk78svl5jz0".parse().unwrap(),
-        "unlimited".parse().unwrap()
-    )?;
-    junomint_prices::tools::must_pay_amount(&_info, "ujunox", price.token1_amount)?;
     set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
     // check valid token info
     msg.validate()?;
@@ -153,12 +146,7 @@ pub fn instantiate(
         MARKETING_INFO.save(deps.storage, &data)?;
     }
 
-    ALLOWANCES.may_load(deps.storage, (&_info.sender, &_info.sender))?;
-    Ok(junomint_prices::tools::send_payment(
-        _info.sender.to_string(),
-        price.receiver,
-        _info.funds
-    ))
+    Ok(Response::default())
 }
 
 pub fn create_accounts(deps: &mut DepsMut, accounts: &[Cw20Coin]) -> StdResult<Uint128> {
