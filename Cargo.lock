@@ -731,7 +731,6 @@ dependencies = [
  "cw-utils",
  "cw2 0.12.1",
  "cw20 0.12.1",
- "junomint-prices",
  "schemars",
  "serde",
  "thiserror",
