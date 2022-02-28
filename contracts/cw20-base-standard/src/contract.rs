@@ -498,7 +498,6 @@ mod tests {
                     address: String::from("addr0000"),
                     amount,
                 }],
-                mint: None,
                 marketing: None,
             };
             let info = mock_info("creator", &[]);
@@ -532,7 +531,6 @@ mod tests {
                     symbol: "CASH".to_string(),
                     decimals: 9,
                     initial_balances: vec![],
-                    mint: None,
                     marketing: Some(InstantiateMarketingInfo {
                         project: Some("Project".to_owned()),
                         description: Some("Description".to_owned()),
@@ -572,7 +570,6 @@ mod tests {
                     symbol: "CASH".to_string(),
                     decimals: 9,
                     initial_balances: vec![],
-                    mint: None,
                     marketing: Some(InstantiateMarketingInfo {
                         project: Some("Project".to_owned()),
                         description: Some("Description".to_owned()),
@@ -616,7 +613,6 @@ mod tests {
                     amount: amount2,
                 },
             ],
-            mint: None,
             marketing: None,
         };
         let info = mock_info("creator", &[]);
@@ -819,7 +815,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -873,7 +868,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -926,7 +920,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -979,7 +972,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1032,7 +1024,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1085,7 +1076,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1138,7 +1128,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1195,7 +1184,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1248,7 +1236,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1297,7 +1284,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1347,7 +1333,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1398,7 +1383,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1448,7 +1432,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1505,7 +1488,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
@@ -1555,7 +1537,6 @@ mod tests {
                 symbol: "CASH".to_string(),
                 decimals: 9,
                 initial_balances: vec![],
-                mint: None,
                 marketing: Some(InstantiateMarketingInfo {
                     project: Some("Project".to_owned()),
                     description: Some("Description".to_owned()),
