@@ -10,7 +10,7 @@ use cw20::{
 use junomint_prices::query::SwapDetailsResponse;
 
 use crate::allowances::{
-    execute_burn_from, execute_decrease_allowance, execute_increase_allowance, execute_send_from,
+    execute_decrease_allowance, execute_increase_allowance, execute_send_from,
     execute_transfer_from, query_allowance,
 };
 use crate::enumerable::{query_all_accounts, query_all_allowances};
@@ -182,7 +182,6 @@ pub fn execute(
         ExecuteMsg::Transfer { recipient, amount } => {
             execute_transfer(deps, env, info, recipient, amount)
         }
-        ExecuteMsg::Burn { amount } => execute_burn(deps, env, info, amount),
         ExecuteMsg::Send {
             contract,
             amount,
@@ -204,7 +203,6 @@ pub fn execute(
             recipient,
             amount,
         } => execute_transfer_from(deps, env, info, owner, recipient, amount),
-        ExecuteMsg::BurnFrom { owner, amount } => execute_burn_from(deps, env, info, owner, amount),
         ExecuteMsg::SendFrom {
             owner,
             contract,
@@ -250,37 +248,6 @@ pub fn execute_transfer(
         .add_attribute("action", "transfer")
         .add_attribute("from", info.sender)
         .add_attribute("to", recipient)
-        .add_attribute("amount", amount);
-    Ok(res)
-}
-
-pub fn execute_burn(
-    deps: DepsMut,
-    _env: Env,
-    info: MessageInfo,
-    amount: Uint128,
-) -> Result<Response, ContractError> {
-    if amount == Uint128::zero() {
-        return Err(ContractError::InvalidZeroAmount {});
-    }
-
-    // lower balance
-    BALANCES.update(
-        deps.storage,
-        &info.sender,
-        |balance: Option<Uint128>| -> StdResult<_> {
-            Ok(balance.unwrap_or_default().checked_sub(amount)?)
-        },
-    )?;
-    // reduce total_supply
-    TOKEN_INFO.update(deps.storage, |mut info| -> StdResult<_> {
-        info.total_supply = info.total_supply.checked_sub(amount)?;
-        Ok(info)
-    })?;
-
-    let res = Response::new()
-        .add_attribute("action", "burn")
-        .add_attribute("from", info.sender)
         .add_attribute("amount", amount);
     Ok(res)
 }
@@ -1014,55 +981,6 @@ mod tests {
         assert_eq!(
             query_token_info(deps.as_ref()).unwrap().total_supply,
             amount1
-        );
-    }
-
-    #[test]
-    fn burn() {
-        let mut deps = mock_dependencies_with_balance(&coins(2, "token"));
-        let addr1 = String::from("addr0001");
-        let amount1 = Uint128::from(12340000u128);
-        let burn = Uint128::from(76543u128);
-        let too_much = Uint128::from(12340321u128);
-
-        do_instantiate(deps.as_mut(), &addr1, amount1);
-
-        // cannot burn nothing
-        let info = mock_info(addr1.as_ref(), &[]);
-        let env = mock_env();
-        let msg = ExecuteMsg::Burn {
-            amount: Uint128::zero(),
-        };
-        let err = execute(deps.as_mut(), env, info, msg).unwrap_err();
-        assert_eq!(err, ContractError::InvalidZeroAmount {});
-        assert_eq!(
-            query_token_info(deps.as_ref()).unwrap().total_supply,
-            amount1
-        );
-
-        // cannot burn more than we have
-        let info = mock_info(addr1.as_ref(), &[]);
-        let env = mock_env();
-        let msg = ExecuteMsg::Burn { amount: too_much };
-        let err = execute(deps.as_mut(), env, info, msg).unwrap_err();
-        assert!(matches!(err, ContractError::Std(StdError::Overflow { .. })));
-        assert_eq!(
-            query_token_info(deps.as_ref()).unwrap().total_supply,
-            amount1
-        );
-
-        // valid burn reduces total supply
-        let info = mock_info(addr1.as_ref(), &[]);
-        let env = mock_env();
-        let msg = ExecuteMsg::Burn { amount: burn };
-        let res = execute(deps.as_mut(), env, info, msg).unwrap();
-        assert_eq!(res.messages.len(), 0);
-
-        let remainder = amount1.checked_sub(burn).unwrap();
-        assert_eq!(get_balance(deps.as_ref(), addr1), remainder);
-        assert_eq!(
-            query_token_info(deps.as_ref()).unwrap().total_supply,
-            remainder
         );
     }
 
