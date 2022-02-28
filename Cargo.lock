@@ -658,7 +658,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "cw20-base-burnable"
+version = "0.12.1"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std",
+ "cw-storage-plus 0.12.1",
+ "cw-utils",
+ "cw2 0.12.1",
+ "cw20 0.12.1",
+ "junomint-prices",
+ "schemars",
+ "serde",
+ "thiserror",
+]
+
+[[package]]
 name = "cw20-base-common"
+version = "0.12.1"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std",
+ "cw-storage-plus 0.12.1",
+ "cw-utils",
+ "cw2 0.12.1",
+ "cw20 0.12.1",
+ "junomint-prices",
+ "schemars",
+ "serde",
+ "thiserror",
+]
+
+[[package]]
+name = "cw20-base-hello"
 version = "0.12.1"
 dependencies = [
  "cosmwasm-schema",
