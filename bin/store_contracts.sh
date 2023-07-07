@@ -1,9 +1,9 @@
 #!/bin/bash
 
-DETAILS='--from EZStaking --gas auto --instantiate-everybody true --gas-prices 0.025ujunox --gas-adjustment 1.4 -b block --keyring-backend test --chain-id uni-2 -y'
+RPC_NODE="https://rpc-testnet-archway.ezstaking.dev:443"
+CHAIN_ID="constantine-3"
+DETAILS="--from EZStaking --gas auto --instantiate-everybody true --gas-prices $(archwayd q rewards estimate-fees 1 --node ${RPC_NODE} --output json | jq -r '.gas_unit_price | (.amount + .denom)') --gas-adjustment 1.4 -b block --keyring-backend test --chain-id ${CHAIN_ID} -y --node ${RPC_NODE}"
 CONTRACTS=(
-  'cw20_base_hello'
-  'cw20_base_simple'
   'cw20_base_standard'
   'cw20_base_burnable'
   'cw20_base_mintable'
@@ -11,8 +11,6 @@ CONTRACTS=(
   'cw20_base_unlimited'
 )
 CONTRACTS_DIR=(
-  'cw20-base-hello'
-  'cw20-base-simple'
   'cw20-base-standard'
   'cw20-base-burnable'
   'cw20-base-mintable'
@@ -33,7 +31,8 @@ do
   cd "${CONTRACT_DIR}"
 
   # Run
-  OUTPUT=$(RUSTFLAGS='-C link-arg=-s' cargo wasm && cp ../../target/wasm32-unknown-unknown/release/${CONTRACT}.wasm . && junod tx wasm store ${CONTRACT}.wasm ${DETAILS})
+  OUTPUT=$(RUSTFLAGS='-C link-arg=-s' cargo wasm && cp ../../target/wasm32-unknown-unknown/release/${CONTRACT}.wasm . && archwayd tx wasm store ${CONTRACT}.wasm ${DETAILS})
+  echo $OUTPUT
 
   # Grep
   echo ${OUTPUT} > "../${TMP_FILE}"
