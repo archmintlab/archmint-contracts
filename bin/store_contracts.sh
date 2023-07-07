@@ -2,7 +2,8 @@
 
 RPC_NODE="https://rpc-testnet-archway.ezstaking.dev:443"
 CHAIN_ID="constantine-3"
-DETAILS="--from EZStaking --gas auto --instantiate-everybody true --gas-prices $(archwayd q rewards estimate-fees 1 --node ${RPC_NODE} --output json | jq -r '.gas_unit_price | (.amount + .denom)') --gas-adjustment 1.4 -b block --keyring-backend test --chain-id ${CHAIN_ID} -y --node ${RPC_NODE}"
+GAS_PRICES=$(archwayd q rewards estimate-fees 1 --node ${RPC_NODE} --output json | jq -r '.gas_unit_price | (.amount + .denom)')
+DETAILS="--from EZStaking --instantiate-everybody true --gas auto --gas-adjustment 1.4 --gas-prices ${GAS_PRICES} -b block --keyring-backend test --chain-id ${CHAIN_ID} -y --node ${RPC_NODE}"
 CONTRACTS=(
   'cw20_base_standard'
   'cw20_base_burnable'
@@ -31,7 +32,7 @@ do
   cd "${CONTRACT_DIR}"
 
   # Run
-  OUTPUT=$(RUSTFLAGS='-C link-arg=-s' cargo wasm && cp ../../target/wasm32-unknown-unknown/release/${CONTRACT}.wasm . && archwayd tx wasm store ${CONTRACT}.wasm ${DETAILS})
+  OUTPUT=$(cp ../../artifacts/${CONTRACT}.wasm . && archwayd tx wasm store ${CONTRACT}.wasm ${DETAILS})
   echo $OUTPUT
 
   # Grep
